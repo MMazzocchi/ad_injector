@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const inject = require('./inject');
 
 const app = express();
 const port = 8000;
@@ -12,9 +13,7 @@ const upload_fields = upload.fields([
   }
 ]);
 
-app.post('/inject', upload_fields, (req, res) => {
-  res.send(`Successfully uploaded ${req.files['base'][0].filename}`);
-});
+app.post('/inject', upload_fields, inject);
 
 app.get('/', (req, res) => res.send('Hello World!'));
 

@@ -16,5 +16,6 @@ services:
 
   node:
     build: ./node
+    command: npm start
     volumes:
-      - ./node:/code
+      - ./node/ad_injector_server:/code

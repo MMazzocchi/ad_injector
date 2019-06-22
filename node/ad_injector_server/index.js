@@ -1,10 +1,17 @@
 const express = require('express');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-const inject = require('./inject');
+const getInjectEndpoint = require('./inject');
+const join = require('path').join;
+
+const DATA_DIR = '/data'
+const UPLOAD_DIR = join(DATA_DIR, 'uploads');
+const OUTPUT_DIR = join(DATA_DIR, 'ouputs');
+const PORT = 8000;
+
+const upload = multer({ dest: UPLOAD_DIR });
+const inject_endpoint = getInjectEndpoint(OUTPUT_DIR);
 
 const app = express();
-const port = 8000;
 
 const upload_fields = upload.fields([
   {
@@ -17,7 +24,12 @@ const upload_fields = upload.fields([
   }
 ]);
 
-app.post('/inject', upload_fields, inject);
+app.post('/inject', upload_fields, inject_endpoint);
 
-app.listen(port,
-  () => console.log(`Listening on port ${port}`));
+app.listen(PORT,() => {
+  console.log(
+`Started the ad injection server.
+  Port:             ${ PORT }
+  Upload Directory: ${ UPLOAD_DIR }
+  Output Directory: ${ OUTPUT_DIR }`);
+});

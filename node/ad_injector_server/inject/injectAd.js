@@ -1,6 +1,12 @@
+const join = require('path').join;
+const crypto = require('crypto');
 const ffmpeg = require('fluent-ffmpeg');
 
-const injectAd = ({ base, ad, time }) => {
+const generateOutputFilename = () => {
+  return crypto.randomBytes(20).toString('hex')+".mp3";
+};
+
+const injectAd = ({ base, ad, output_dir, time }) => {
   return new Promise((resolve, reject) => {
 
     // First, create a timmed copy of the base
@@ -11,6 +17,9 @@ const injectAd = ({ base, ad, time }) => {
       .format('mp3');
 
      // Second, concatenate the trimmed base, the ad, and the remaining base
+     const output = join(output_dir,
+                         generateOutputFilename());
+
      ffmpeg()
       .input(trim_command.pipe())
       .input(ad)
@@ -21,8 +30,10 @@ const injectAd = ({ base, ad, time }) => {
       .complexFilter([
         '[0:a][1:a][2:a]concat=n=3:v=0:a=1',
       ])
-      .output('/code/out.mp3')
-      .on('end', resolve)
+      .output(output)
+      .on('end', () => {
+        resolve(output);
+      })
       .on('error', reject)
       .run();
   }); 

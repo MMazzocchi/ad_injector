@@ -10,12 +10,14 @@ const upload_fields = upload.fields([
   {
     name: 'base',
     maxCount: 1,
+  },
+  {
+    name: 'ad',
+    maxCount: 1,
   }
 ]);
 
 app.post('/inject', upload_fields, inject);
-
-app.get('/', (req, res) => res.send('Hello World!'));
 
 app.listen(port,
   () => console.log(`Listening on port ${port}`));

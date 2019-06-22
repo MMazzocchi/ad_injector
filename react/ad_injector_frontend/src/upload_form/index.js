@@ -20,6 +20,7 @@ const UploadForm = ({ classes }) => {
   const [ duration, setDuration ] = useState(undefined);
   const [ time, setTime ] = useState("00:00");
   const [ processing, setProcessing ] = useState(false);
+  const [ error, setError ] = useState(undefined);
 
   const base_change = (e) => {
     const audio = document.createElement('audio');
@@ -35,6 +36,7 @@ const UploadForm = ({ classes }) => {
 
   const submit = async (e) => {
     e.preventDefault();
+    setError(undefined);
 
     const base = document.getElementById('base_file').files[0];
     const ad = document.getElementById('ad_file').files[0];
@@ -46,13 +48,24 @@ const UploadForm = ({ classes }) => {
 
     setProcessing(true);
 
-    const resp = await fetch('/api/inject', {
-      method: 'POST',
-      body: data,
-    });
-    const blob = await resp.blob();
-    const url = await URL.createObjectURL(blob);
-    window.open(url, '_blank');
+    try {
+      const resp = await fetch('/api/inject', {
+        method: 'POST',
+        body: data,
+      });
+
+      if(!resp.ok) {
+        const message = await resp.text();
+        throw new Error("Error: "+message);
+      }
+
+      const blob = await resp.blob();
+      const url = await URL.createObjectURL(blob);
+      window.open(url, '_blank');
+
+    } catch(e) {
+      setError(e.message);
+    }
 
     setProcessing(false);
   };
@@ -76,6 +89,7 @@ const UploadForm = ({ classes }) => {
           <input id="ad_file" type="file" />
         </div>
       </div>
+
       <div className={ classes.form_row }>
         <div className={ classes.form_label }>
           <label>Insert Time: <span>{ time }</span></label>
@@ -84,11 +98,18 @@ const UploadForm = ({ classes }) => {
           <TimeSelector onChange={ updateTime  } duration={ duration } />
         </div>
       </div>
+
       <div className={ classes.form_row }>
         { processing ? 'Processing...' :
           <button onClick={ submit }>Submit</button>
         }
       </div>
+
+      { error === undefined ? '' :
+        <div className={ classes.form_row }>
+          { error }
+        </div>
+      }
     </form>
   );
 };

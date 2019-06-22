@@ -1,5 +1,6 @@
 import React from 'react';
 import withStyles from 'react-jss';
+import UploadForm from './upload_form';
 
 const styles = {
   header: {
@@ -32,19 +33,6 @@ const styles = {
     'max-width': '1000px',
     'padding': '20px',
   },
-  form_row: {
-    'padding': '10px',
-    'border-bottom': '#DDD 1px solid',
-    '&:last-child': {
-      'border-bottom': 'none',
-    }
-  },
-  form_label: {
-    'padding-bottom': '5px',
-  },
-  time_slider: {
-    'width': '100%',
-  }
 };
 
 const App = ({ classes }) => (
@@ -62,40 +50,11 @@ const App = ({ classes }) => (
     <div className={ classes.content_container }>
       <div className={ classes.content }>
         <section>
-          <h2>Inject an Ad</h2>
+          <h2 style={{ textAlign: 'center' }}>Inject an Ad</h2>
           <p>Use the form below to inject an advertisement MP3 into an existing
              MP3.</p>
 
-          <form>
-            <div className={ classes.form_row }>
-              <div className={ classes.form_label }>
-                <label for="base_file">Base File:</label>
-              </div>
-              <div>
-                <input id="base_file" type="file" />
-              </div>
-            </div>
-            <div className={ classes.form_row }>
-              <div className={ classes.form_label }>
-                <label for="ad_file">Ad File:</label>
-              </div>
-              <div>
-                <input id="base_file" type="file" />
-              </div>
-            </div>
-            <div className={ classes.form_row }>
-              <div className={ classes.form_label }>
-                <label for="insert_time">Insert Time: <span>00:00</span></label>
-              </div>
-              <div>
-                <input className={ classes.time_slider } id="insert_time"
-                   type="range" />
-              </div>
-            </div>
-            <div className={ classes.form_row }>
-              <button>Submit</button>
-            </div>
-          </form>
+          <UploadForm />
         </section>
       </div>
     </div>

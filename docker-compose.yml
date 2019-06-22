@@ -19,3 +19,4 @@ services:
     command: npm start
     volumes:
       - ./node/ad_injector_server:/code
+      - ./node/data:/data

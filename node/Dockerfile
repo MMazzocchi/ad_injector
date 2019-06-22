@@ -1,7 +1,7 @@
 FROM node
 RUN apt-get update && \
   apt-get install -y ffmpeg
-RUN mkdir -p /code
+RUN mkdir -p /code /data/uploads /data/outputs
 WORKDIR /code
 COPY ad_injector_server/package.json ./
 RUN npm install

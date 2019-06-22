@@ -28,7 +28,7 @@ const getInjectEndpoint = (output_dir) => {
           output_dir: output_dir,
         });
 
-        res.send(output);
+        res.sendFile(output);
 
       } catch(e) {
         res.status(500).send(e.message);

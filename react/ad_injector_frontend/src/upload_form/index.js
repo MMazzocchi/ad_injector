@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import withStyles from 'react-jss';
 
 const styles = {
@@ -17,37 +17,48 @@ const styles = {
   }
 };
 
-const UploadForm = ({ classes }) => (
-  <form>
-    <div className={ classes.form_row }>
-      <div className={ classes.form_label }>
-        <label for="base_file">Base File:</label>
+const UploadForm = ({ classes }) => {
+  const [ duration, setDuration ] = useState(undefined);
+
+  const base_change = (e) => {
+    const audio = document.createElement('audio');
+    audio.src = URL.createObjectURL(e.currentTarget.files[0]);
+    setDuration(audio.duration);
+  };
+
+  return (
+    <form>
+      <div className={ classes.form_row }>
+        <div className={ classes.form_label }>
+          <label htmlFor="base_file">Base File:</label>
+        </div>
+        <div>
+          <input id="base_file" type="file" onChange={ base_change }/>
+        </div>
       </div>
-      <div>
-        <input id="base_file" type="file" />
+
+      <div className={ classes.form_row }>
+        <div className={ classes.form_label }>
+          <label htmlFor="ad_file">Ad File:</label>
+        </div>
+        <div>
+          <input id="base_file" type="file" />
+        </div>
       </div>
-    </div>
-    <div className={ classes.form_row }>
-      <div className={ classes.form_label }>
-        <label for="ad_file">Ad File:</label>
+      <div className={ classes.form_row }>
+        <div className={ classes.form_label }>
+          <label htmlFor="insert_time">Insert Time: <span>00:00</span></label>
+        </div>
+        <div>
+          <input className={ classes.time_slider } id="insert_time"
+             type="range" />
+        </div>
       </div>
-      <div>
-        <input id="base_file" type="file" />
+      <div className={ classes.form_row }>
+        <button>Submit</button>
       </div>
-    </div>
-    <div className={ classes.form_row }>
-      <div className={ classes.form_label }>
-        <label for="insert_time">Insert Time: <span>00:00</span></label>
-      </div>
-      <div>
-        <input className={ classes.time_slider } id="insert_time"
-           type="range" />
-      </div>
-    </div>
-    <div className={ classes.form_row }>
-      <button>Submit</button>
-    </div>
-  </form>
-);
+    </form>
+  );
+};
 
 export default withStyles(styles)(UploadForm);

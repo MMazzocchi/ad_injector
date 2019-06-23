@@ -11,6 +11,7 @@ This endpoint expects three parameters:
   * `time`: the time to inject the ad ad (ex: `4:00`)
 
 This endpoint will return the name of the generated file.
+
 **NOTE**: This endpoint is **blocking**! For large files, it can take a while
 to complete processing and return!
 

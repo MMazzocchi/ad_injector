@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import withStyles from 'react-jss';
 
 const styles = {
@@ -50,11 +50,14 @@ const styles = {
   },
 };
 
-const RangeInput = ({ classes, onChange=()=>{} }) => {
+const RangeInput = ({ classes, onChange=()=>{}, value: initial_value=0 }) => {
   const [ value, setValue ] = useState(0);
   const [ selected, setSelected ] = useState(false);
 
   const ref = React.createRef();
+  useEffect(() => {
+    setValue(initial_value);
+  }, [ initial_value ]);
 
   const update = (e, force=false) => {
     if(selected || force) {

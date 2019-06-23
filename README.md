@@ -27,3 +27,6 @@ file to inject). Select files from your machine, and select a time to inject at.
 Click "Submit". Once the new MP3 has been generated, it should trigger a
 download dialog box (you may have to disable popup blocking on your web
 browser).
+
+**NOTE**: Depending on the size of the file, it could take several minutes to
+generate the file!

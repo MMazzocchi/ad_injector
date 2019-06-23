@@ -10,9 +10,12 @@ This endpoint expects three parameters:
   * `ad`: the MP3 to inject into the base file
   * `time`: the time to inject the ad ad (ex: `4:00`)
 
-This endpoint will serve the combined file as an MP3.
+This endpoint will return the name of the generated file.
 **NOTE**: This endpoint is **blocking**! For large files, it can take a while
 to complete processing and return!
+
+### GET: `download/<file name>`
+This endpoint will serve the requested file (if it exists).
 
 ## Usage with Curl
 ```
@@ -20,5 +23,5 @@ $ curl \
   -F "base=@/path/to/base.mp3" \
   -F "ad=@/path/to/ad.mp3" \
   -F "time=4:00" \
-  http://localhost/inject
+  http://localhost:8000/inject
 ```

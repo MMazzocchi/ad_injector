@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import withStyles from 'react-jss';
 import TimeSelector from './TimeSelector.js';
 import sToHHMMSS from './sToHHMMSS.js';
+import API from './API.js';
+import getDuration from './getDuration.js';
 
 const styles = {
   form_row: {
@@ -22,12 +24,9 @@ const UploadForm = ({ classes }) => {
   const [ processing, setProcessing ] = useState(false);
   const [ error, setError ] = useState(undefined);
 
-  const base_change = (e) => {
-    const audio = document.createElement('audio');
-    audio.addEventListener('loadedmetadata', () => {
-      setDuration(audio.duration);
-    });
-    audio.src = URL.createObjectURL(e.currentTarget.files[0]);
+  const base_change = async (e) => {
+    const duration = await getDuration(e.currentTarget.files[0]);
+    setDuration(duration);
   };
 
   const updateTime = (e) => {
@@ -41,27 +40,11 @@ const UploadForm = ({ classes }) => {
     const base = document.getElementById('base_file').files[0];
     const ad = document.getElementById('ad_file').files[0];
 
-    const data = new FormData();
-    data.append('base', base);
-    data.append('ad', ad);
-    data.append('time', time);
-
     setProcessing(true);
 
     try {
-      const resp = await fetch('/api/inject', {
-        method: 'POST',
-        body: data,
-      });
-
-      if(!resp.ok) {
-        const message = await resp.text();
-        throw new Error("Error: "+message);
-      }
-
-      const blob = await resp.blob();
-      const url = await URL.createObjectURL(blob);
-      window.open(url, '_blank');
+      const name = await API.inject(base, ad, time);
+      API.download(name);
 
     } catch(e) {
       setError(e.message);

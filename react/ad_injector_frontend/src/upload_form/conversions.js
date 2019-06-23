@@ -1,3 +1,5 @@
+
+
 const sToHHMMSS = (s) => {
   let str = "";
 
@@ -21,4 +23,15 @@ const sToHHMMSS = (s) => {
   return str;
 };
 
-export default sToHHMMSS;
+const HHMMSSToS = (str) => {
+  const tokens = str.split(":");
+  const s = tokens.reduce(
+    (acc, value) => ((acc*60) + Number.parseInt(value)), 0)
+
+  return s;
+};
+
+export {
+  sToHHMMSS,
+  HHMMSSToS,
+};

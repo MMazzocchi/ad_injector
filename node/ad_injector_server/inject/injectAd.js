@@ -6,13 +6,15 @@ const generateOutputFilename = () => {
   return crypto.randomBytes(20).toString('hex')+".mp3";
 };
 
+// Return a Promise that, on resolution, will return the filename of a new MP3
+// file consisting of the base file with the ad injected at the given time
 const injectAd = ({ base, ad, output_dir, time }) => {
   return new Promise((resolve, reject) => {
 
     const output_name = generateOutputFilename();
     const output_path = join(output_dir, output_name);
 
-    // First, create a timmed copy of the base
+    // First, create a trimmed copy of the base
     const trim_command = ffmpeg()
       .input(base)
         .inputFormat('mp3')

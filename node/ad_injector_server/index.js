@@ -11,8 +11,7 @@ const PORT = 8000;
 const upload = multer({ dest: UPLOAD_DIR });
 const inject_endpoint = getInjectEndpoint(OUTPUT_DIR);
 
-const app = express();
-
+// Define the files that will be uploaded on the inject endpoint
 const upload_fields = upload.fields([
   {
     name: 'base',
@@ -24,19 +23,21 @@ const upload_fields = upload.fields([
   }
 ]);
 
+// Set the file as an attachment on download calls; this prevents the browser
+// from auto-playing the file
 const setFileHeaders = (res, filepath, stat) => {
   res.set('Content-Disposition', 'attachment; filename='+
     path.basename(filepath));
 };
 
+const app = express();
 app.post('/inject', upload_fields, inject_endpoint);
 app.use('/download',
   express.static(OUTPUT_DIR, { setHeaders: setFileHeaders }));
 
 app.listen(PORT,() => {
-  console.log(
-`Started the ad injection server.
-  Port:             ${ PORT }
-  Upload Directory: ${ UPLOAD_DIR }
-  Output Directory: ${ OUTPUT_DIR }`);
+  console.log('Started the ad injection server.');
+  console.log(`  Port:             ${ PORT }`);
+  console.log(`  Upload Directory: ${ UPLOAD_DIR }`);
+  console.log(`  Output Directory: ${ OUTPUT_DIR }`);
 });

@@ -1,7 +1,7 @@
 # Ad Injector
 This web server allows a user to "inject" an advertisement into an MP3 file.
 
-![](https://raw.githubusercontent.com/MMazzocchi/ad_injector/readme/img/ad_injector.png?token=AAQZEJWNDUVUOQY6EDXP5NC5B6SUA)
+![](https://raw.githubusercontent.com/MMazzocchi/ad_injector/master/img/ad_injector.png?token=AAQZEJTKUAF5NF6KL3S6KAK5B6TQG)
 
 ## Getting Started
 ### Pre-Requisites

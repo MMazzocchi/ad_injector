@@ -1,4 +1,4 @@
-
+// Time conversion methods
 
 const sToHHMMSS = (s) => {
   let str = "";

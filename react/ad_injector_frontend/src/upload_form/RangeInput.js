@@ -1,3 +1,6 @@
+// This is a custom element designed to replace the range input (which does not
+// render correctly on Firefox).
+
 import React, { useState, useEffect } from 'react';
 import withStyles from 'react-jss';
 

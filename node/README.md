@@ -23,5 +23,5 @@ $ curl \
   -F "base=@/path/to/base.mp3" \
   -F "ad=@/path/to/ad.mp3" \
   -F "time=4:00" \
-  http://localhost/inject
+  http://localhost:8000/inject
 ```

@@ -1,6 +1,7 @@
 import React from 'react';
 import withStyles from 'react-jss';
 import sToHHMMSS from './sToHHMMSS.js';
+import RangeInput from './RangeInput.js';
 
 const styles = {
   time_slider: {
@@ -15,36 +16,21 @@ const styles = {
   }
 };
 
-const TimeSelector = ({ classes, duration, onChange }) => {
-  const disabled = (duration === undefined);
+const TimeInput = ({ classes, duration, onChange }) => {
+  const update = (value) => {
+    onChange((value / 100) * duration);
+  };
 
   return (
     <div className={ classes.container }>
       <div className={ classes.ticks }>
-        <div
-          style={{ color: disabled ? 'grey' : 'black' }}
-          className={ classes.left_tick }>
- 
-          00:00
-        </div>
-        <div
-          style={{ color: disabled ? 'grey' : 'black' }}
-          className={ classes.right_tick }>
-
-          { disabled ? '??:??' : sToHHMMSS(duration) } 
-        </div>
+        <div>00:00</div>
+        <div>{ sToHHMMSS(duration) }</div>
       </div>
 
-      <input
-         disabled={ disabled }
-         className={ classes.time_slider } id="insert_time"
-         type="range"
-         min="0"
-         max={ disabled ? 100 : Math.floor(duration) }
-         step="1"
-         onChange={ onChange }/>
+      <RangeInput onChange={ update } />
     </div>
   );
 };
 
-export default withStyles(styles)(TimeSelector);
+export default withStyles(styles)(TimeInput);

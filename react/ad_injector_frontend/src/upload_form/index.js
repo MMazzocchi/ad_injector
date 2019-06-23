@@ -29,10 +29,6 @@ const UploadForm = ({ classes }) => {
     setDuration(duration);
   };
 
-  const updateTime = (e) => {
-    setTime(sToHHMMSS(e.target.value));
-  };
-
   const submit = async (e) => {
     e.preventDefault();
     setError(undefined);
@@ -53,15 +49,32 @@ const UploadForm = ({ classes }) => {
     setProcessing(false);
   };
 
+  const updateTime = (time_s) => {
+    setTime(sToHHMMSS(time_s));
+  };
+
   return (
     <form>
       <div className={ classes.form_row }>
-        <div className={ classes.form_label }>
-          <label htmlFor="base_file">Base File:</label>
-        </div>
         <div>
-          <input id="base_file" type="file" onChange={ base_change }/>
+          <div className={ classes.form_label }>
+            <label htmlFor="base_file">Base File:</label>
+          </div>
+          <div>
+            <input id="base_file" type="file" onChange={ base_change }/>
+          </div>
         </div>
+
+        { duration === undefined ? '' :
+          <div>
+            <div className={ classes.form_label }>
+              <label>Inject Time: <span>{ time }</span></label>
+            </div>
+            <div>
+              <TimeSelector onChange={ updateTime } duration={ duration } />
+            </div>
+          </div>
+        }
       </div>
 
       <div className={ classes.form_row }>
@@ -70,15 +83,6 @@ const UploadForm = ({ classes }) => {
         </div>
         <div>
           <input id="ad_file" type="file" />
-        </div>
-      </div>
-
-      <div className={ classes.form_row }>
-        <div className={ classes.form_label }>
-          <label>Insert Time: <span>{ time }</span></label>
-        </div>
-        <div>
-          <TimeSelector onChange={ updateTime  } duration={ duration } />
         </div>
       </div>
 

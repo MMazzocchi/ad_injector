@@ -62,7 +62,8 @@ const RangeInput = ({ classes, onChange=()=>{}, value: initial_value=0 }) => {
   const update = (e, force=false) => {
     if(selected || force) {
       const rect = ref.current.getBoundingClientRect();
-      const new_value = ((e.clientX - rect.left) / rect.width)*100;
+      const new_value = Math.min(100, Math.max(0,
+        ((e.clientX - rect.left) / rect.width)*100));
       setValue(new_value);
       onChange(new_value);
     }

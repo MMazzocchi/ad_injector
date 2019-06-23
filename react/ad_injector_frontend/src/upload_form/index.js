@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import withStyles from 'react-jss';
 import TimeSelector from './TimeSelector.js';
 import sToHHMMSS from './sToHHMMSS.js';
+import API from './API.js';
 
 const styles = {
   form_row: {
@@ -41,27 +42,11 @@ const UploadForm = ({ classes }) => {
     const base = document.getElementById('base_file').files[0];
     const ad = document.getElementById('ad_file').files[0];
 
-    const data = new FormData();
-    data.append('base', base);
-    data.append('ad', ad);
-    data.append('time', time);
-
     setProcessing(true);
 
     try {
-      const resp = await fetch('/api/inject', {
-        method: 'POST',
-        body: data,
-      });
-
-      if(!resp.ok) {
-        const message = await resp.text();
-        throw new Error("Error: "+message);
-      }
-
-      const name = await resp.text();
-      const download_url = "/api/download/"+name;
-      window.location = download_url;
+      const name = await API.inject(base, ad, time);
+      API.download(name);
 
     } catch(e) {
       setError(e.message);

@@ -65,11 +65,22 @@ const RangeInput = ({ classes, onChange=()=>{} }) => {
     }
   };
 
+  const mouseDown = (e) => {
+    e.preventDefault();
+    setSelected(true);
+    update(e, true);
+  };
+
+  const mouseUp = (e) => {
+    e.preventDefault();
+    setSelected(false);
+  };
+
   return (
     <div ref={ ref }
        className={ classes.container }
-       onMouseDown={ (e) => { setSelected(true); update(e, true); } }
-       onMouseUp={ (e) => { setSelected(false) } }
+       onMouseDown={ mouseDown }
+       onMouseUp={ mouseUp }
        onMouseMove={ update }>
 
       <div className={ classes.track_container }>

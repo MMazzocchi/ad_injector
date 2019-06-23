@@ -1,6 +1,8 @@
 # Ad Injector
 This web server allows a user to "inject" an advertisement into an MP3 file.
 
+![](https://raw.githubusercontent.com/MMazzocchi/ad_injector/readme/img/ad_injector.png?token=AAQZEJWNDUVUOQY6EDXP5NC5B6SUA)
+
 ## Getting Started
 ### Pre-Requisites
 Ensure that you have `docker` installed on your machine and it is running.

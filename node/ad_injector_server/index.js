@@ -1,11 +1,11 @@
 const express = require('express');
 const multer = require('multer');
 const getInjectEndpoint = require('./inject');
-const join = require('path').join;
+const path = require('path');
 
 const DATA_DIR = '/data'
-const UPLOAD_DIR = join(DATA_DIR, 'uploads');
-const OUTPUT_DIR = join(DATA_DIR, 'ouputs');
+const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
+const OUTPUT_DIR = path.join(DATA_DIR, 'ouputs');
 const PORT = 8000;
 
 const upload = multer({ dest: UPLOAD_DIR });
@@ -24,8 +24,14 @@ const upload_fields = upload.fields([
   }
 ]);
 
+const setFileHeaders = (res, filepath, stat) => {
+  res.set('Content-Disposition', 'attachment; filename='+
+    path.basename(filepath));
+};
+
 app.post('/inject', upload_fields, inject_endpoint);
-app.use('/download', express.static(OUTPUT_DIR));
+app.use('/download',
+  express.static(OUTPUT_DIR, { setHeaders: setFileHeaders }));
 
 app.listen(PORT,() => {
   console.log(

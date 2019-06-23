@@ -59,9 +59,9 @@ const UploadForm = ({ classes }) => {
         throw new Error("Error: "+message);
       }
 
-      const blob = await resp.blob();
-      const url = await URL.createObjectURL(blob);
-      window.open(url, '_blank');
+      const name = await resp.text();
+      const download_url = "/api/download/"+name;
+      window.location = download_url;
 
     } catch(e) {
       setError(e.message);

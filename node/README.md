@@ -18,6 +18,14 @@ to complete processing and return!
 ### GET: `download/<file name>`
 This endpoint will serve the requested file (if it exists).
 
+## Running Standalone
+```
+$ docker build -t ad_injector_server .
+$ docker run ad_injector_server --network=host 
+```
+**NOTE**: The first time running, it may take a while to pull and build the
+images. Subsequent runs will be faster.
+
 ## Usage with Curl
 ```
 $ curl \

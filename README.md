@@ -22,5 +22,6 @@ Once running, navigate to http://localhost:8000. You should see a form allowing
 for the upload of a "base" file (the file to inject INTO) and an "ad" file (the
 file to inject). Select files from your machine, and select a time to inject at.
 
-Click "Submit". Once the new MP3 has been generated, it should open in a new
-tab (you may have disable popup blocking on your web browser).
+Click "Submit". Once the new MP3 has been generated, it should trigger a
+download dialog box (you may have to disable popup blocking on your web
+browser).

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import withStyles from 'react-jss';
 import TimeSelector from './TimeSelector.js';
-import sToHHMMSS from './sToHHMMSS.js';
 import API from './API.js';
 import getDuration from './getDuration.js';
 
@@ -49,10 +48,6 @@ const UploadForm = ({ classes }) => {
     setProcessing(false);
   };
 
-  const updateTime = (time_s) => {
-    setTime(sToHHMMSS(time_s));
-  };
-
   return (
     <form>
       <div className={ classes.form_row }>
@@ -67,12 +62,7 @@ const UploadForm = ({ classes }) => {
 
         { duration === undefined ? '' :
           <div>
-            <div className={ classes.form_label }>
-              <label>Inject Time: <span>{ time }</span></label>
-            </div>
-            <div>
-              <TimeSelector onChange={ updateTime } duration={ duration } />
-            </div>
+            <TimeSelector onChange={ setTime } duration={ duration } />
           </div>
         }
       </div>

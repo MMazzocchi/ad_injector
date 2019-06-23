@@ -25,6 +25,7 @@ const upload_fields = upload.fields([
 ]);
 
 app.post('/inject', upload_fields, inject_endpoint);
+app.use('/download', express.static(OUTPUT_DIR));
 
 app.listen(PORT,() => {
   console.log(
